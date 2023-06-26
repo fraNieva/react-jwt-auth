@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 const Users = () => {
 	const [users, setUsers] = useState();
+	const [isLoading, setIsLoading] = useState(false);
 	const axiosPrivate = useAxiosPrivate();
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -14,11 +15,13 @@ const Users = () => {
 
 		const getUsers = async () => {
 			try {
+				setIsLoading(true);
 				const response = await axiosPrivate.get('/users', {
 					signal: controller.signal,
 				});
 				console.log(response.data);
 				isMounted && setUsers(response.data);
+				response && setIsLoading(false);
 			} catch (err) {
 				console.error(err);
 				navigate('/login', { state: { from: location }, replace: true });
@@ -33,6 +36,14 @@ const Users = () => {
 		};
 	}, []);
 
+	if (isLoading) {
+		return (
+			<article>
+				<h2>Users List</h2>
+				<p>Is loading ....</p>
+			</article>
+		);
+	}
 	return (
 		<article>
 			<h2>Users List</h2>

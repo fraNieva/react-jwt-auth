@@ -1,11 +1,16 @@
-import { Outlet } from "react-router-dom"
+import { Outlet } from 'react-router-dom';
 
 const Layout = () => {
-    return (
-        <main className="App">
-            <Outlet />
-        </main>
-    )
-}
+	return (
+		<>
+			<header>
+				<p>this is the layout header</p>
+			</header>
+			<main className="App">
+				<Outlet />
+			</main>
+		</>
+	);
+};
 
-export default Layout
+export default Layout;
